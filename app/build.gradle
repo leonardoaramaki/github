@@ -6,6 +6,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dependencies-plugin'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -52,6 +53,8 @@ dependencies {
     implementation Deps.constraintLayout
     implementation Deps.coroutines
     implementation Deps.dataStore
+    implementation Deps.hilt
+    kapt Deps.hiltCompiler
     implementation Deps.kotlin
     implementation Deps.liveData
     implementation Deps.material

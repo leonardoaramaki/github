@@ -2,7 +2,9 @@ package com.example.bliss
 
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class BlissApp : Application() {
 
     override fun onCreate() {

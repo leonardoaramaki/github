@@ -22,6 +22,8 @@ object Deps {
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
     const val dataStore = "androidx.datastore:datastore-preferences:1.0.0-alpha06"
+    const val hilt = "com.google.dagger:hilt-android:2.28-alpha"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:2.28-alpha"
     const val junit5 = "org.junit.jupiter:junit-jupiter:5.6.3"
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:1.4.10"
     const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"

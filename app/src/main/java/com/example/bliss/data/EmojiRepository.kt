@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.collect
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 interface EmojiRepository {
     /**
@@ -23,7 +24,7 @@ interface EmojiRepository {
  * @property localDataSource the local data source from where to fetch cached data
  * @property timeToLive the total time cached data is considered valid (not staled) in milliseconds
  */
-class DefaultEmojiRepository(
+class DefaultEmojiRepository @Inject constructor(
     private val preferences: Preferences,
     private val remoteDataSource: EmojiDataSource,
     private val localDataSource: EmojiDataSource,
