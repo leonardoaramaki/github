@@ -51,19 +51,27 @@ dependencies {
     implementation Deps.androidXCore
     implementation Deps.constraintLayout
     implementation Deps.coroutines
+    implementation Deps.dataStore
     implementation Deps.kotlin
     implementation Deps.liveData
     implementation Deps.material
     implementation Deps.moshi
+    implementation Deps.moshiKotlin
+    implementation Deps.moshiConverter
     implementation Deps.okHttp
+    implementation Deps.okHttpLogger
     implementation Deps.retrofit
     implementation Deps.room
     kapt Deps.roomCompiler
     implementation Deps.roomKtx
+    implementation Deps.threetenabp
+    implementation Deps.timber
     implementation Deps.viewModel
     implementation Deps.workManager
 
     testImplementation Deps.junit5
+    testImplementation Deps.mockk
+    testImplementation Deps.threetenbp
     testImplementation Deps.truth
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -9,7 +9,6 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityDashboardBinding.inflate(layoutInflater)
 
-
         setContentView(binding.root)
     }
 }
