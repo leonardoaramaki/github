@@ -45,6 +45,7 @@ class DashboardActivity : AppCompatActivity() {
         })
 
         binding.btnRandomEmoji.setOnClickListener {
+            binding.progress.show()
             viewModel.loadRandomEmoji()
         }
 
