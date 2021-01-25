@@ -1,8 +1,8 @@
 package com.example.bliss
 
-import com.example.bliss.data.DefaultEmojiRepository
+import com.example.bliss.data.DefaultGithubRepository
 import com.example.bliss.data.Emoji
-import com.example.bliss.data.source.EmojiDataSource
+import com.example.bliss.data.source.GithubDataSource
 import com.example.bliss.data.source.Preferences
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
@@ -15,12 +15,12 @@ import org.junit.Test
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-class EmojiRepositoryTest {
+class GithubRepositoryTest {
     val preferences = mockk<Preferences>(relaxed = true)
-    val localDataSource = mockk<EmojiDataSource>(relaxed = true)
-    val remoteDataSource = mockk<EmojiDataSource>()
+    val localDataSource = mockk<GithubDataSource>(relaxed = true)
+    val remoteDataSource = mockk<GithubDataSource>()
     val timeToLive = 2000L // Expire data after 2 seconds
-    val sut = DefaultEmojiRepository(preferences, remoteDataSource, localDataSource, timeToLive)
+    val sut = DefaultGithubRepository(preferences, remoteDataSource, localDataSource, timeToLive)
 
     @Before
     fun setup() {
@@ -38,6 +38,8 @@ class EmojiRepositoryTest {
                 "https://github.githubassets.com/images/icons/emoji/unicode/1f947.png?v8"
             ),
         )
+
+        coEvery { remoteDataSource }
 
         coEvery { localDataSource.getEmojiList() } returns emptyList()
     }

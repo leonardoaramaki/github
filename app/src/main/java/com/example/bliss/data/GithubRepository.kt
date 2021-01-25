@@ -1,23 +1,31 @@
 package com.example.bliss.data
 
-import com.example.bliss.data.source.EmojiDataSource
+import com.example.bliss.data.source.GithubDataSource
 import com.example.bliss.data.source.Preferences
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-interface EmojiRepository {
+interface GithubRepository {
     /**
      * Return a list of [Emoji]s.
      */
     suspend fun getEmojiList(): List<Emoji>
+
+    /**
+     * Return a [User] data for a given [username].
+     *
+     * @param username the github username handle to search for
+     *
+     * @return a [User] object when found or null otherwise
+     */
+    suspend fun getUser(username: String): User?
 }
 
 /**
- * Default implementation for [EmojiRepository] that uses Github as a data source.
+ * Default implementation for [GithubRepository] that uses Github as a data source.
  *
  * The default [timeToLive] is defined as 1 day.
  *
@@ -25,12 +33,12 @@ interface EmojiRepository {
  * @property localDataSource the local data source from where to fetch cached data
  * @property timeToLive the total time cached data is considered valid (not staled) in milliseconds
  */
-class DefaultEmojiRepository @Inject constructor(
+class DefaultGithubRepository @Inject constructor(
     private val preferences: Preferences,
-    private val remoteDataSource: EmojiDataSource,
-    private val localDataSource: EmojiDataSource,
+    private val remoteDataSource: GithubDataSource,
+    private val localDataSource: GithubDataSource,
     private val timeToLive: Long = TimeUnit.DAYS.toMillis(1) // 24h or 86400000ms
-) : EmojiRepository {
+) : GithubRepository {
 
     override suspend fun getEmojiList(): List<Emoji> {
         val lastUpdated: Long = preferences.getLastUpdatedEmojisEpoch().firstOrNull() ?: 0
@@ -54,4 +62,8 @@ class DefaultEmojiRepository @Inject constructor(
             preferences.putLastUpdatedEmojisEpoch(currentTime)
             localDataSource.saveAll(it)
         }
+
+    override suspend fun getUser(username: String): User? {
+        TODO("Not yet implemented")
+    }
 }
