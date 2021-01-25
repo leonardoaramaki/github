@@ -17,6 +17,11 @@ class EmojiListAdapter : RecyclerView.Adapter<EmojiListAdapter.EmojiViewHolder>(
 
     override fun onBindViewHolder(holder: EmojiViewHolder, position: Int) {
         holder.bind(emojis[position])
+        holder.itemView.setOnClickListener {
+            // Remove item on click
+            emojis.indexOfFirst { it.shortCode == emojis[holder.adapterPosition].shortCode }
+            notifyItemRemoved(holder.adapterPosition)
+        }
     }
 
     override fun getItemCount() = emojis.size
