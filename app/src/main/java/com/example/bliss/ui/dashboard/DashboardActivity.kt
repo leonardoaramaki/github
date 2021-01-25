@@ -12,63 +12,80 @@ import com.example.bliss.R
 import com.example.bliss.databinding.ActivityDashboardBinding
 import com.example.bliss.ui.avatarlist.AvatarListActivity
 import com.example.bliss.ui.emojilist.EmojiListActivity
+import com.example.bliss.ui.googlerepos.GoogleReposActivity
+import com.example.bliss.ui.googlerepos.GoogleReposViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
     private val viewModel: DashboardViewModel by viewModels()
+    private lateinit var binding: ActivityDashboardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityDashboardBinding.inflate(layoutInflater)
-        with(binding) {
-            val context = this@DashboardActivity
-            viewModel.randomEmoji.observe(context, Observer { emoji ->
-                emoji ?: return@Observer
-                Glide.with(this@DashboardActivity)
-                    .load(emoji.url)
-                    .into(ivPreview)
-                progress.hide()
-            })
-            viewModel.user.observe(context, Observer { result ->
-                progressSearch.hide()
-                etUsername.isEnabled = true
-                etUsername.requestFocus()
-                if (result.isFailure) {
-                    etUsername.text?.clear()
-                    Toast.makeText(context, getString(R.string.not_found_username), Toast.LENGTH_SHORT).show()
-                }
-                val user = result.getOrNull() ?: return@Observer
-                Glide.with(context)
-                    .load(user.avatarUrl)
-                    .into(ivPreview)
-            })
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        initRandomEmojiFeature()
+        initAvatarSearchFeature()
+        initGoogleRepositoryListFeature()
+
+        binding.btnEmojiList.setOnClickListener {
+            openEmojiList()
+        }
+
+        setContentView(binding.root)
+    }
+
+    private fun initRandomEmojiFeature() {
+        viewModel.randomEmoji.observe(this, Observer { emoji ->
+            emoji ?: return@Observer
+            Glide.with(this)
+                .load(emoji.url)
+                .into(binding.ivPreview)
+            binding.progress.hide()
+        })
+
+        binding.btnRandomEmoji.setOnClickListener {
+            binding.progress.show()
             viewModel.loadRandomEmoji()
+        }
 
-            btnRandomEmoji.setOnClickListener {
-                viewModel.loadRandomEmoji()
+        viewModel.loadRandomEmoji()
+    }
+
+    private fun initAvatarSearchFeature() {
+        binding.btnAvatarList.setOnClickListener {
+            openAvatarList()
+        }
+
+        binding.btnSearch.isEnabled = false
+        binding.btnSearch.setOnClickListener {
+            binding.progressSearch.show()
+            binding.etUsername.isEnabled = false
+            viewModel.searchUser(binding.etUsername.text.toString())
+        }
+
+        binding.etUsername.addTextChangedListener {
+            binding.btnSearch.isEnabled = !it.isNullOrEmpty()
+        }
+    }
+
+    private fun initGoogleRepositoryListFeature() {
+        viewModel.user.observe(this, Observer { result ->
+            binding.progressSearch.hide()
+            binding.etUsername.isEnabled = true
+            binding.etUsername.requestFocus()
+            if (result.isFailure) {
+                binding.etUsername.text?.clear()
+                Toast.makeText(this, getString(R.string.not_found_username), Toast.LENGTH_SHORT).show()
             }
+            val user = result.getOrNull() ?: return@Observer
+            Glide.with(this)
+                .load(user.avatarUrl)
+                .into(binding.ivPreview)
+        })
 
-            btnEmojiList.setOnClickListener {
-                openEmojiList()
-            }
-
-            btnAvatarList.setOnClickListener {
-                openAvatarList()
-            }
-
-            btnSearch.isEnabled = false
-            btnSearch.setOnClickListener {
-                progressSearch.show()
-                etUsername.isEnabled = false
-                viewModel.searchUser(etUsername.text.toString())
-            }
-
-            etUsername.addTextChangedListener {
-                btnSearch.isEnabled = !it.isNullOrEmpty()
-            }
-
-            setContentView(root)
+        binding.btnGoogleRepos.setOnClickListener {
+            openGoogleRepoList()
         }
     }
 
@@ -78,5 +95,9 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun openAvatarList() {
         startActivity(AvatarListActivity.intent(this@DashboardActivity))
+    }
+
+    private fun openGoogleRepoList() {
+        startActivity(Intent(this, GoogleReposActivity::class.java))
     }
 }

@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Bliss">
-        <activity android:name=".ui.avatarlist.AvatarListActivity"></activity>
+        <activity android:name=".ui.googlerepos.GoogleReposActivity"></activity>
+        <activity android:name=".ui.avatarlist.AvatarListActivity" />
         <activity android:name=".ui.emojilist.EmojiListActivity" />
         <activity android:name=".ui.dashboard.DashboardActivity">
             <intent-filter>

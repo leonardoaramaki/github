@@ -88,4 +88,13 @@
         app:layout_constraintEnd_toEndOf="@id/btn_emoji_list"
         app:layout_constraintStart_toStartOf="@id/btn_emoji_list"
         app:layout_constraintTop_toBottomOf="@id/et_username" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_google_repos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/google_repos"
+        app:layout_constraintEnd_toEndOf="@id/btn_avatar_list"
+        app:layout_constraintStart_toStartOf="@id/btn_avatar_list"
+        app:layout_constraintTop_toBottomOf="@id/btn_avatar_list" />
 </androidx.constraintlayout.widget.ConstraintLayout>

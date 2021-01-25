@@ -41,6 +41,7 @@ object Deps {
     const val moshiKotlin = "com.squareup.moshi:moshi-kotlin:1.11.0"
     const val okHttp = "com.squareup.okhttp3:okhttp:4.9.0"
     const val okHttpLogger = "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    const val paging = "androidx.paging:paging-runtime:2.1.2"
     const val retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
     const val room = "androidx.room:room-runtime:2.2.6"
     const val roomKtx = "androidx.room:room-ktx:2.2.6"

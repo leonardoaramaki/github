@@ -29,6 +29,7 @@ class EmojiListActivity : AppCompatActivity() {
         // Load emojis
         viewModel.emojiList.observe(this, Observer { emojiList ->
             emojiList ?: return@Observer
+            binding.progressEmojiLoading.hide()
             adapter.setItems(emojiList)
         })
         viewModel.loadEmojis()

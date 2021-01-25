@@ -2,6 +2,7 @@ package com.example.bliss.data
 
 import com.example.bliss.data.source.GithubDataSource
 import com.example.bliss.data.source.Preferences
+import com.example.bliss.data.source.Repository
 import kotlinx.coroutines.flow.firstOrNull
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
@@ -34,6 +35,11 @@ interface GithubRepository {
      * Remove a [user] from data source, if possible.
      */
     suspend fun removeUser(user: User)
+
+    /**
+     * Return a list of [Repository] objects from Google.
+     */
+    suspend fun getGoogleRepos(): List<Repository>
 }
 
 /**
@@ -89,5 +95,9 @@ class DefaultGithubRepository @Inject constructor(
 
     override suspend fun removeUser(user: User) {
         localDataSource.removeUser(user)
+    }
+
+    override suspend fun getGoogleRepos(): List<Repository> {
+        TODO()
     }
 }
