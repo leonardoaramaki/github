@@ -11,4 +11,8 @@ interface GithubDataSource {
     suspend fun getUser(username: String): User?
 
     suspend fun saveUser(user: User)
+
+    suspend fun getUsers(): List<User>
+
+    suspend fun removeUser(user: User)
 }

@@ -2,4 +2,6 @@
     <string name="app_name">Bliss</string>
     <string name="random_emoji">Random Emoji</string>
     <string name="emoji_list">Emoji List</string>
+    <string name="avatar_list">Avatar List</string>
+    <string name="not_found_username">Username could not be found!</string>
 </resources>

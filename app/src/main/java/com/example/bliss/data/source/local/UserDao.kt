@@ -1,9 +1,6 @@
 package com.example.bliss.data.source.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.bliss.data.User
 
 @Dao
@@ -16,4 +13,7 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg user: User)
+
+    @Delete
+    fun deleteAll(vararg user: User)
 }
