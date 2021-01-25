@@ -8,8 +8,9 @@ import androidx.datastore.preferences.createDataStore
 import com.example.bliss.data.source.Preferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class PreferencesImpl(context: Context) : Preferences {
+class PreferencesImpl @Inject constructor(context: Context) : Preferences {
     private val dataStore: DataStore<androidx.datastore.preferences.core.Preferences> =
         context.createDataStore(name = "preferences")
 

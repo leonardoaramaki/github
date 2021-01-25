@@ -3,9 +3,11 @@ package com.example.bliss.data
 import com.example.bliss.data.source.EmojiDataSource
 import com.example.bliss.data.source.Preferences
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.firstOrNull
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 interface EmojiRepository {
     /**
@@ -23,7 +25,7 @@ interface EmojiRepository {
  * @property localDataSource the local data source from where to fetch cached data
  * @property timeToLive the total time cached data is considered valid (not staled) in milliseconds
  */
-class DefaultEmojiRepository(
+class DefaultEmojiRepository @Inject constructor(
     private val preferences: Preferences,
     private val remoteDataSource: EmojiDataSource,
     private val localDataSource: EmojiDataSource,
@@ -31,10 +33,7 @@ class DefaultEmojiRepository(
 ) : EmojiRepository {
 
     override suspend fun getEmojiList(): List<Emoji> {
-        var lastUpdated: Long = 0
-        preferences.getLastUpdatedEmojisEpoch().collect {
-            lastUpdated = it
-        }
+        val lastUpdated: Long = preferences.getLastUpdatedEmojisEpoch().firstOrNull() ?: 0
 
         val currentTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) * 1000
         if (currentTime - lastUpdated >= timeToLive) {

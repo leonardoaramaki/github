@@ -7,21 +7,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
-class RemoteEmojiDataSource : EmojiDataSource {
-    val client = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
-        .build()
-
-    val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.github.com")
-        .client(client)
-        .addConverterFactory(
-            MoshiConverterFactory.create(Moshi.Builder().add(EmojiResponseConverter()).build())
-        )
-        .build()
-
-    val github = retrofit.create(GithubService::class.java)
+class RemoteEmojiDataSource @Inject constructor(
+    private val github: GithubService
+) : EmojiDataSource {
 
     override suspend fun getEmojiList(): List<Emoji> {
         return github.getEmojis()
