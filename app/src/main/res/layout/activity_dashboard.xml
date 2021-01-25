@@ -11,10 +11,10 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:indeterminate="true"
-        tools:src="@tools:sample/avatars"
         app:layout_constraintBottom_toTopOf="@id/btn_random_emoji"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@tools:sample/avatars" />
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/progress"
@@ -36,4 +36,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_emoji_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/emoji_list"
+        app:layout_constraintEnd_toEndOf="@id/btn_random_emoji"
+        app:layout_constraintStart_toStartOf="@id/btn_random_emoji"
+        app:layout_constraintTop_toBottomOf="@id/btn_random_emoji" />
 </androidx.constraintlayout.widget.ConstraintLayout>
