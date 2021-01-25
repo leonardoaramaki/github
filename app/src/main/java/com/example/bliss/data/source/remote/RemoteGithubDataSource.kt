@@ -24,4 +24,12 @@ class RemoteGithubDataSource @Inject constructor(
     override suspend fun saveUser(user: User) {
         // No-op
     }
+
+    override suspend fun getUsers(): List<User> {
+        TODO()
+    }
+
+    override suspend fun removeUser(user: User) {
+        // No-op
+    }
 }

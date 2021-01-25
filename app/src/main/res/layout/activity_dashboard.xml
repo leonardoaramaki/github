@@ -57,6 +57,18 @@
         app:layout_constraintTop_toBottomOf="@id/btn_emoji_list"
         tools:text="blissapps" />
 
+    <androidx.core.widget.ContentLoadingProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:id="@+id/progress_search"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:visibility="gone"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/et_username"
+        app:layout_constraintEnd_toEndOf="@id/et_username"
+        app:layout_constraintTop_toTopOf="@id/et_username"
+        tools:visibility="visible" />
+
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_search"
         android:layout_width="wrap_content"
@@ -67,4 +79,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/et_username"
         app:layout_constraintTop_toTopOf="@id/et_username" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_avatar_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/avatar_list"
+        app:layout_constraintEnd_toEndOf="@id/btn_emoji_list"
+        app:layout_constraintStart_toStartOf="@id/btn_emoji_list"
+        app:layout_constraintTop_toBottomOf="@id/et_username" />
 </androidx.constraintlayout.widget.ConstraintLayout>

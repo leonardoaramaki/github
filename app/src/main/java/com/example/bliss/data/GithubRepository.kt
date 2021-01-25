@@ -22,6 +22,18 @@ interface GithubRepository {
      * @return a [User] object when found or null otherwise
      */
     suspend fun getUser(username: String): User?
+
+    /**
+     * Return a list containing all [User]s that were fetched so far.
+     *
+     * @return a list of [User]s
+     */
+    suspend fun getUsers(): List<User>
+
+    /**
+     * Remove a [user] from data source, if possible.
+     */
+    suspend fun removeUser(user: User)
 }
 
 /**
@@ -69,5 +81,13 @@ class DefaultGithubRepository @Inject constructor(
             it ?: return@also
             localDataSource.saveUser(it)
         }
+    }
+
+    override suspend fun getUsers(): List<User> {
+        return localDataSource.getUsers()
+    }
+
+    override suspend fun removeUser(user: User) {
+        localDataSource.removeUser(user)
     }
 }
