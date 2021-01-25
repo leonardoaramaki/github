@@ -1,11 +1,12 @@
 package com.example.bliss.data.source.local
 
+import androidx.paging.DataSource
+import androidx.paging.PagedList
 import com.example.bliss.data.Emoji
 import com.example.bliss.data.User
 import com.example.bliss.data.source.GithubDataSource
-import kotlinx.coroutines.CoroutineScope
+import com.example.bliss.data.source.Repository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -32,5 +33,13 @@ class LocalGithubDataSource @Inject constructor(private val db: AppDatabase) : G
 
     override suspend fun removeUser(user: User) = withContext(Dispatchers.IO) {
         db.userDao().deleteAll(user)
+    }
+
+    override suspend fun getUserRepos(username: String, page: Int, perPage: Int): DataSource<Int, Repository> {
+        TODO()
+    }
+
+    override suspend fun saveRepos(repositories: List<Repository>, username: String) {
+        TODO()
     }
 }

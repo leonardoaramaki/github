@@ -4,4 +4,5 @@
     <string name="emoji_list">Emoji List</string>
     <string name="avatar_list">Avatar List</string>
     <string name="not_found_username">Username could not be found!</string>
+    <string name="google_repos">Google Repos</string>
 </resources>
