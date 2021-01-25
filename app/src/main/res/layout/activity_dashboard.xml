@@ -7,7 +7,7 @@
     tools:context=".ui.dashboard.DashboardActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_emoji"
+        android:id="@+id/iv_preview"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:indeterminate="true"
@@ -45,4 +45,26 @@
         app:layout_constraintEnd_toEndOf="@id/btn_random_emoji"
         app:layout_constraintStart_toStartOf="@id/btn_random_emoji"
         app:layout_constraintTop_toBottomOf="@id/btn_random_emoji" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toStartOf="@id/btn_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_emoji_list"
+        tools:text="blissapps" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/ic_baseline_search_24"
+        app:layout_constraintBottom_toBottomOf="@id/et_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/et_username"
+        app:layout_constraintTop_toTopOf="@id/et_username" />
 </androidx.constraintlayout.widget.ConstraintLayout>
