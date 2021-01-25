@@ -41,7 +41,7 @@ class DefaultGithubRepository @Inject constructor(
 ) : GithubRepository {
 
     override suspend fun getEmojiList(): List<Emoji> {
-        val lastUpdated: Long = preferences.getLastUpdatedEmojisEpoch().firstOrNull() ?: 0
+        val lastUpdated: Long = preferences.getLastUpdateForEmoji().firstOrNull() ?: 0
 
         val currentTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) * 1000
         if (currentTime - lastUpdated >= timeToLive) {
@@ -59,11 +59,15 @@ class DefaultGithubRepository @Inject constructor(
     // Fetch emojis from remote, persist on SQLite and save update time.
     private suspend fun getEmojisFromRemote(currentTime: Long): List<Emoji> =
         remoteDataSource.getEmojiList().also {
-            preferences.putLastUpdatedEmojisEpoch(currentTime)
+            preferences.setLastUpdateForEmoji(currentTime)
             localDataSource.saveAll(it)
         }
 
     override suspend fun getUser(username: String): User? {
-        TODO("Not yet implemented")
+        // Always keep Users cached since this route is more prone for abusing
+        return localDataSource.getUser(username) ?: return remoteDataSource.getUser(username).also {
+            it ?: return@also
+            localDataSource.saveUser(it)
+        }
     }
 }

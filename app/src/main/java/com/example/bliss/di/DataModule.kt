@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.bliss.data.DefaultGithubRepository
 import com.example.bliss.data.GithubRepository
+import com.example.bliss.data.User
 import com.example.bliss.data.source.GithubDataSource
 import com.example.bliss.data.source.Preferences
 import com.example.bliss.data.source.local.AppDatabase
@@ -12,7 +13,10 @@ import com.example.bliss.data.source.local.PreferencesImpl
 import com.example.bliss.data.source.remote.EmojiResponseConverter
 import com.example.bliss.data.source.remote.GithubService
 import com.example.bliss.data.source.remote.RemoteGithubDataSource
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,12 +42,15 @@ object DataModule {
     @Provides
     fun provideAppDatabase(@ApplicationContext context: Context) =
         Room.databaseBuilder(context, AppDatabase::class.java, "bliss.db")
+            .fallbackToDestructiveMigration()
             .build()
 
     @Provides
     fun provideOkHttpClient() =
         OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .build()
 
     @Provides
@@ -52,7 +59,10 @@ object DataModule {
             .baseUrl("https://api.github.com")
             .client(client)
             .addConverterFactory(
-                MoshiConverterFactory.create(Moshi.Builder().add(EmojiResponseConverter()).build())
+                MoshiConverterFactory.create(Moshi.Builder()
+                    .add(EmojiResponseConverter())
+                    .addLast(KotlinJsonAdapterFactory())
+                    .build())
             )
             .build()
 

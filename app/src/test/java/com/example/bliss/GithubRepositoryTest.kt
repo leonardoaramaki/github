@@ -2,6 +2,7 @@ package com.example.bliss
 
 import com.example.bliss.data.DefaultGithubRepository
 import com.example.bliss.data.Emoji
+import com.example.bliss.data.User
 import com.example.bliss.data.source.GithubDataSource
 import com.example.bliss.data.source.Preferences
 import com.google.common.truth.Truth.assertThat
@@ -24,8 +25,7 @@ class GithubRepositoryTest {
 
     @Before
     fun setup() {
-        coEvery { preferences.getLastUpdatedEmojisEpoch() } returns flowOf(0)
-
+        coEvery { preferences.getLastUpdateForEmoji() } returns flowOf(0)
         coEvery { remoteDataSource.getEmojiList() } returns listOf(
             Emoji("+1", "https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png?v8"),
             Emoji("-1", "https://github.githubassets.com/images/icons/emoji/unicode/1f44e.png?v8"),
@@ -38,14 +38,15 @@ class GithubRepositoryTest {
                 "https://github.githubassets.com/images/icons/emoji/unicode/1f947.png?v8"
             ),
         )
-
-        coEvery { remoteDataSource }
-
+        // Mock call to getUser from github
+        coEvery { remoteDataSource.getUser(any()) } returns User(42, "blissapps", "https...")
+        // Mock call to getUser from cache
+        coEvery { localDataSource.getUser(any()) } returns null
         coEvery { localDataSource.getEmojiList() } returns emptyList()
     }
 
     @Test
-    fun `EmojiRepository getEmojiList should return a list of Emoji`() {
+    fun `Call to getEmojiList() should return a list of emojis`() {
         var emojiList: List<Emoji> = runBlocking { sut.getEmojiList() }
         assertThat(emojiList).hasSize(4)
 
@@ -53,7 +54,7 @@ class GithubRepositoryTest {
         coVerify(exactly = 1) { remoteDataSource.getEmojiList() }
         coVerify(exactly = 0) { localDataSource.getEmojiList() }
 
-        coEvery { preferences.getLastUpdatedEmojisEpoch() } returns flowOf(
+        coEvery { preferences.getLastUpdateForEmoji() } returns flowOf(
             LocalDateTime.now().toEpochSecond(
                 ZoneOffset.UTC
             ) * 1000
@@ -82,7 +83,7 @@ class GithubRepositoryTest {
     }
 
     @Test
-    fun `EmojiRepository getEmojiList should fetch from remote after cache expiry time`() {
+    fun `Call to getEmojiList() should get from remote after cache expiry time`() {
         var emojiList: List<Emoji> = runBlocking { sut.getEmojiList() }
         assertThat(emojiList).hasSize(4)
 
@@ -103,7 +104,7 @@ class GithubRepositoryTest {
             ),
         )
 
-        coEvery { preferences.getLastUpdatedEmojisEpoch() } returns flowOf(
+        coEvery { preferences.getLastUpdateForEmoji() } returns flowOf(
             LocalDateTime.now().toEpochSecond(
                 ZoneOffset.UTC
             ) * 1000
@@ -118,5 +119,30 @@ class GithubRepositoryTest {
         // Verify subsequent requests gets data from remote again since data is already stale
         coVerify(exactly = 2) { remoteDataSource.getEmojiList() }
         coVerify(exactly = 0) { localDataSource.getEmojiList() }
+    }
+
+    @Test
+    fun `Call to getUser() should return a User from cache or remote`() {
+        var user = runBlocking { sut.getUser("blissapps") }
+
+        coVerify(exactly = 1) { localDataSource.getUser("blissapps") }
+        coVerify(exactly = 1) { remoteDataSource.getUser("blissapps") }
+        coVerify(exactly = 1) { localDataSource.saveUser(any()) }
+        assertThat(user).isNotNull()
+        assertThat(user!!.id).isEqualTo(42)
+        assertThat(user.login).isEqualTo("blissapps")
+        assertThat(user.avatarUrl).isEqualTo("https...")
+
+        // Simulate cached data
+        coEvery { sut.getUser("blissapps") } returns User(42, "blissapps", "https...")
+        user = runBlocking { sut.getUser("blissapps") }
+
+        coVerify(exactly = 1) { remoteDataSource.getUser("blissapps") }
+        coVerify(exactly = 2) { localDataSource.getUser("blissapps") }
+        coVerify(exactly = 1) { localDataSource.saveUser(any()) }
+        assertThat(user).isNotNull()
+        assertThat(user!!.id).isEqualTo(42)
+        assertThat(user.login).isEqualTo("blissapps")
+        assertThat(user.avatarUrl).isEqualTo("https...")
     }
 }

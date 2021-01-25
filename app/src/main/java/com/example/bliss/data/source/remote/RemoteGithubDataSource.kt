@@ -18,6 +18,10 @@ class RemoteGithubDataSource @Inject constructor(
     }
 
     override suspend fun getUser(username: String): User? {
-        TODO("Not yet implemented")
+        return github.getUser(username)
+    }
+
+    override suspend fun saveUser(user: User) {
+        // No-op
     }
 }

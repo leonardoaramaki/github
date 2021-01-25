@@ -9,4 +9,6 @@ interface GithubDataSource {
     suspend fun saveAll(emojis: List<Emoji>)
 
     suspend fun getUser(username: String): User?
+
+    suspend fun saveUser(user: User)
 }

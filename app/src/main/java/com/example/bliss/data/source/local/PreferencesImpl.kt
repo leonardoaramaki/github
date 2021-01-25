@@ -14,13 +14,13 @@ class PreferencesImpl @Inject constructor(context: Context) : Preferences {
     private val dataStore: DataStore<androidx.datastore.preferences.core.Preferences> =
         context.createDataStore(name = "preferences")
 
-    override suspend fun getLastUpdatedEmojisEpoch(): Flow<Long> {
+    override suspend fun getLastUpdateForEmoji(): Flow<Long> {
         return dataStore.data.map { preferences ->
             preferences[LAST_UPDATED_EMOJIS] ?: 0L
         }
     }
 
-    override suspend fun putLastUpdatedEmojisEpoch(lastUpdated: Long) {
+    override suspend fun setLastUpdateForEmoji(lastUpdated: Long) {
         dataStore.edit { preferences ->
             preferences[LAST_UPDATED_EMOJIS] = lastUpdated
         }
