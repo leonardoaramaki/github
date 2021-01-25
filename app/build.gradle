@@ -48,13 +48,19 @@ android {
 }
 
 dependencies {
+    implementation Deps.activityKtx
     implementation Deps.androidXAppCompat
     implementation Deps.androidXCore
     implementation Deps.constraintLayout
+    implementation Deps.coreKtx
     implementation Deps.coroutines
     implementation Deps.dataStore
+    implementation Deps.fragmentKtx
+    implementation Deps.glide
+    kapt Deps.glideCompiler
     implementation Deps.hilt
-    kapt Deps.hiltCompiler
+    kapt Deps.hiltAndroidCompiler
+    implementation Deps.hiltViewModel
     implementation Deps.kotlin
     implementation Deps.liveData
     implementation Deps.material
@@ -70,6 +76,8 @@ dependencies {
     implementation Deps.threetenabp
     implementation Deps.timber
     implementation Deps.viewModel
+    implementation Deps.viewModelKtx
+
     implementation Deps.workManager
 
     testImplementation Deps.junit5
