@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Bliss">
-        <activity android:name="com.example.bliss.ui.dashboard.DashboardActivity">
+        <activity android:name=".ui.emojilist.EmojiListActivity"></activity>
+        <activity android:name=".ui.dashboard.DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
