@@ -1,9 +1,9 @@
-package com.example.bliss.ui.googlerepos
+package com.example.bliss.ui.googleRepos
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.bliss.data.source.Repository
 
-class RepositoryCompator : DiffUtil.ItemCallback<Repository>() {
+class RepositoryComparator : DiffUtil.ItemCallback<Repository>() {
     override fun areItemsTheSame(oldItem: Repository, newItem: Repository): Boolean {
         return oldItem.id == newItem.id
     }

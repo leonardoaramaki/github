@@ -49,20 +49,20 @@ object DataModule {
     fun provideOkHttpClient() =
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
+                level = HttpLoggingInterceptor.Level.HEADERS
             })
             .build()
 
     @Provides
     fun provideRetrofit(client: OkHttpClient) =
         Retrofit.Builder()
-            .baseUrl("https://api.github.com")
+            .baseUrl("http://10.0.2.2:3001")
             .client(client)
             .addConverterFactory(
                 MoshiConverterFactory.create(Moshi.Builder()
                     .add(EmojiResponseConverter())
                     .addLast(KotlinJsonAdapterFactory())
-                    .build())
+                    .build()).asLenient()
             )
             .build()
 

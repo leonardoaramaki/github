@@ -1,13 +1,14 @@
-package com.example.bliss.ui.googlerepos
+package com.example.bliss.ui.googleRepos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bliss.databinding.ActivityGoogleReposBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GoogleReposActivity : AppCompatActivity() {
@@ -21,8 +22,8 @@ class GoogleReposActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.adapter = adapter
-        viewModel.repositoryPagedList.observe(this, Observer { repos ->
-            adapter.submitList(repos)
-        })
+        lifecycleScope.launch {
+            viewModel.repos.collectLatest { adapter.submitData(it) }
+        }
     }
 }

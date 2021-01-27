@@ -1,6 +1,7 @@
 package com.example.bliss.data.source
 
 import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import com.example.bliss.data.Emoji
 import com.example.bliss.data.User
 
@@ -17,7 +18,11 @@ interface GithubDataSource {
 
     suspend fun removeUser(user: User)
 
-    suspend fun     getUserRepos(username: String, page: Int, perPage: Int): DataSource<Int, Repository>
+    suspend fun getUserRepos(username: String, page: Int, perPage: Int): List<Repository>
 
-    suspend fun saveRepos(repositories: List<Repository>, username: String)
+    suspend fun saveRepos(repositories: List<Repository>)
+
+    suspend fun clearAllRepos()
+
+    fun getReposByUsername(username: String): PagingSource<Int, Repository>
 }

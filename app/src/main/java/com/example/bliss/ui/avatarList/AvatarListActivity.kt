@@ -1,4 +1,4 @@
-package com.example.bliss.ui.avatarlist
+package com.example.bliss.ui.avatarList
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.bliss.R
 import com.example.bliss.data.User
 import com.example.bliss.databinding.ActivityAvatarListBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +39,5 @@ class AvatarListActivity : AppCompatActivity() {
 
     companion object {
         const val COLUMN_COUNT = 4
-        fun intent(context: Context): Intent =
-            Intent(context, AvatarListActivity::class.java)
     }
 }

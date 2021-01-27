@@ -1,4 +1,4 @@
-package com.example.bliss.ui.avatarlist
+package com.example.bliss.ui.avatarList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,10 +18,10 @@ class AvatarListAdapter : RecyclerView.Adapter<AvatarListAdapter.AvatarViewHolde
         holder.bind(users[position])
         holder.itemView.setOnClickListener {
             // Remove item on click
-            val index = users.indexOfFirst { it.id == users[holder.adapterPosition].id }
+            val index = users.indexOfFirst { it.id == users[holder.bindingAdapterPosition].id }
             val removed = users.removeAt(index)
             removeAvatarCallback?.invoke(removed)
-            notifyItemRemoved(holder.adapterPosition)
+            notifyItemRemoved(holder.bindingAdapterPosition)
         }
     }
 

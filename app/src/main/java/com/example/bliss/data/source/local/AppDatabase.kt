@@ -6,8 +6,9 @@ import com.example.bliss.data.Emoji
 import com.example.bliss.data.User
 import com.example.bliss.data.source.Repository
 
-@Database(entities = [Emoji::class, User::class], version = 5)
+@Database(entities = [Emoji::class, User::class, Repository::class], version = 5)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun emojiDao(): EmojiDao
     abstract fun userDao(): UserDao
+    abstract fun repositoryDao(): RepositoryDao
 }

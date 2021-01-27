@@ -2,12 +2,14 @@ package com.example.bliss.data.source.local
 
 import androidx.paging.DataSource
 import androidx.paging.PagedList
+import androidx.paging.PagingSource
 import com.example.bliss.data.Emoji
 import com.example.bliss.data.User
 import com.example.bliss.data.source.GithubDataSource
 import com.example.bliss.data.source.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 class LocalGithubDataSource @Inject constructor(private val db: AppDatabase) : GithubDataSource {
@@ -35,11 +37,21 @@ class LocalGithubDataSource @Inject constructor(private val db: AppDatabase) : G
         db.userDao().deleteAll(user)
     }
 
-    override suspend fun getUserRepos(username: String, page: Int, perPage: Int): DataSource<Int, Repository> {
-        TODO()
+    override suspend fun getUserRepos(username: String, page: Int, perPage: Int): List<Repository> {
+        // No-op
+        throw RuntimeException("Tried to query local database to get repositories as a List.\n" +
+            "Use getRepositoryPagingSource instead to get the paged version.")
     }
 
-    override suspend fun saveRepos(repositories: List<Repository>, username: String) {
-        TODO()
+    override suspend fun saveRepos(repositories: List<Repository>) {
+        db.repositoryDao().insertAll(repositories)
+    }
+
+    override suspend fun clearAllRepos() {
+        db.repositoryDao().clearAll()
+    }
+
+    override fun getReposByUsername(username: String): PagingSource<Int, Repository> {
+        return db.repositoryDao().pagingSource(username)
     }
 }

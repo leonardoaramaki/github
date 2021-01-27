@@ -1,15 +1,13 @@
-package com.example.bliss.ui.googlerepos
+package com.example.bliss.ui.googleRepos
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bliss.data.source.Repository
 import com.example.bliss.databinding.ItemRepositoryBinding
 
-class GoogleReposAdapter : PagedListAdapter<Repository, GoogleReposAdapter.RepoViewHolder>(RepositoryCompator()) {
-    private val repositories = mutableListOf<Repository>()
-
+class GoogleReposAdapter : PagingDataAdapter<Repository, GoogleReposAdapter.RepoViewHolder>(RepositoryComparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder =
         RepoViewHolder(ItemRepositoryBinding.inflate(LayoutInflater.from(parent.context)))
 
