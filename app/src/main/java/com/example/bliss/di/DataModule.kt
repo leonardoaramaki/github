@@ -2,6 +2,7 @@ package com.example.bliss.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.bliss.R
 import com.example.bliss.data.DefaultGithubRepository
 import com.example.bliss.data.GithubRepository
 import com.example.bliss.data.User
@@ -49,20 +50,20 @@ object DataModule {
     fun provideOkHttpClient() =
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
+                level = HttpLoggingInterceptor.Level.HEADERS
             })
             .build()
 
     @Provides
-    fun provideRetrofit(client: OkHttpClient) =
+    fun provideRetrofit(@ApplicationContext context: Context, client: OkHttpClient) =
         Retrofit.Builder()
-            .baseUrl("https://api.github.com")
+            .baseUrl(context.getString(R.string.api_server))
             .client(client)
             .addConverterFactory(
                 MoshiConverterFactory.create(Moshi.Builder()
                     .add(EmojiResponseConverter())
                     .addLast(KotlinJsonAdapterFactory())
-                    .build())
+                    .build()).asLenient()
             )
             .build()
 

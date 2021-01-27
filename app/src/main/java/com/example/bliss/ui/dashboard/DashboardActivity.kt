@@ -10,10 +10,9 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.bliss.R
 import com.example.bliss.databinding.ActivityDashboardBinding
-import com.example.bliss.ui.avatarlist.AvatarListActivity
-import com.example.bliss.ui.emojilist.EmojiListActivity
-import com.example.bliss.ui.googlerepos.GoogleReposActivity
-import com.example.bliss.ui.googlerepos.GoogleReposViewModel
+import com.example.bliss.ui.avatarList.AvatarListActivity
+import com.example.bliss.ui.emojiList.EmojiListActivity
+import com.example.bliss.ui.googleRepos.GoogleReposActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -76,7 +75,8 @@ class DashboardActivity : AppCompatActivity() {
             binding.etUsername.requestFocus()
             if (result.isFailure) {
                 binding.etUsername.text?.clear()
-                Toast.makeText(this, getString(R.string.not_found_username), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.not_found_username), Toast.LENGTH_SHORT)
+                    .show()
             }
             val user = result.getOrNull() ?: return@Observer
             Glide.with(this)
@@ -94,7 +94,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun openAvatarList() {
-        startActivity(AvatarListActivity.intent(this@DashboardActivity))
+        startActivity(Intent(this, AvatarListActivity::class.java))
     }
 
     private fun openGoogleRepoList() {

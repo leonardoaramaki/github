@@ -9,5 +9,6 @@ import com.squareup.moshi.Json
 data class Repository(
     @PrimaryKey @ColumnInfo(name = "id") @Json(name = "id") val id: Long,
     @ColumnInfo(name = "full_name") @Json(name = "full_name") val fullName: String,
+    @Transient @ColumnInfo(name = "page") val page: Int = 0,
     @Transient @ColumnInfo(name = "username") var username: String? = null
 )

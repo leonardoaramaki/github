@@ -1,4 +1,4 @@
-package com.example.bliss.ui.emojilist
+package com.example.bliss.ui.emojiList
 
 import android.content.res.Resources
 import android.util.TypedValue
@@ -23,9 +23,9 @@ class EmojiListAdapter : RecyclerView.Adapter<EmojiListAdapter.EmojiViewHolder>(
         holder.itemView.setOnClickListener {
             // Remove item on click
             val index =
-                emojis.indexOfFirst { it.shortCode == emojis[holder.adapterPosition].shortCode }
+                emojis.indexOfFirst { it.shortCode == emojis[holder.bindingAdapterPosition].shortCode }
             emojis.removeAt(index)
-            notifyItemRemoved(holder.adapterPosition)
+            notifyItemRemoved(holder.bindingAdapterPosition)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.bliss.ui.emojilist
+package com.example.bliss.ui.emojiList
 
 import androidx.lifecycle.*
 import com.example.bliss.data.Emoji

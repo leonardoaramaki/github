@@ -1,4 +1,4 @@
-package com.example.bliss.ui.avatarlist
+package com.example.bliss.ui.avatarList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -30,16 +30,29 @@ android {
         }
 
         debug {
-            applicationIdSuffix ".dev"
             minifyEnabled false
         }
     }
+
+    flavorDimensions "environment"
+    productFlavors {
+        dev {
+            dimension "environment"
+            applicationIdSuffix ".dev"
+        }
+        staging {
+            dimension "environment"
+            applicationIdSuffix ".stg"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 
     buildFeatures {

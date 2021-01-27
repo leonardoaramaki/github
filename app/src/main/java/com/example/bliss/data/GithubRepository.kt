@@ -1,8 +1,14 @@
 package com.example.bliss.data
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.bliss.data.source.GithubDataSource
 import com.example.bliss.data.source.Preferences
 import com.example.bliss.data.source.Repository
+import com.example.bliss.data.source.local.RepositoryRemoteMediator
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
@@ -36,10 +42,7 @@ interface GithubRepository {
      */
     suspend fun removeUser(user: User)
 
-    /**
-     * Return a list of [Repository] objects from Google.
-     */
-    suspend fun getGoogleRepos(): List<Repository>
+    fun getGoogleRepos(): Flow<PagingData<Repository>>
 }
 
 /**
@@ -97,7 +100,12 @@ class DefaultGithubRepository @Inject constructor(
         localDataSource.removeUser(user)
     }
 
-    override suspend fun getGoogleRepos(): List<Repository> {
-        TODO()
-    }
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getGoogleRepos() = Pager(
+        config = PagingConfig(pageSize = 1),
+        initialKey = null,
+        remoteMediator = RepositoryRemoteMediator(remoteDataSource, localDataSource)
+    ) {
+        localDataSource.getReposByUsername("google")
+    }.flow
 }

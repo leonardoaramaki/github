@@ -1,13 +1,10 @@
-package com.example.bliss.ui.emojilist
+package com.example.bliss.ui.emojiList
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.asFlow
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bliss.R
 import com.example.bliss.databinding.ActivityEmojiListBinding
 import dagger.hilt.android.AndroidEntryPoint
 

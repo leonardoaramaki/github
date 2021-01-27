@@ -1,6 +1,7 @@
 package com.example.bliss.data.source.remote
 
 import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import com.example.bliss.data.Emoji
 import com.example.bliss.data.User
 import com.example.bliss.data.source.GithubDataSource
@@ -28,6 +29,7 @@ class RemoteGithubDataSource @Inject constructor(
     }
 
     override suspend fun getUsers(): List<User> {
+        // No-op
         TODO()
     }
 
@@ -35,11 +37,19 @@ class RemoteGithubDataSource @Inject constructor(
         // No-op
     }
 
-    override suspend fun getUserRepos(username: String, page: Int, perPage: Int): DataSource<Int, Repository> {
-        return RepositoryDataSource(github)
+    override suspend fun getUserRepos(username: String, page: Int, perPage: Int): List<Repository> {
+        return github.getUserRepos(username, page, perPage)
     }
 
-    override suspend fun saveRepos(repositories: List<Repository>, username: String) {
+    override suspend fun saveRepos(repositories: List<Repository>) {
         // No-op
+    }
+
+    override suspend fun clearAllRepos() {
+        // No-op
+    }
+
+    override fun getReposByUsername(username: String): PagingSource<Int, Repository> {
+        TODO("Not yet implemented")
     }
 }
