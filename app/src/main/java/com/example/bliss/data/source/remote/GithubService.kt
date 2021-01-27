@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface GithubService {
     @GET("/emojis")
-    suspend fun getEmojis(): List<Emoji>
+    suspend fun getEmojis(): List<Emoji>?
 
     @GET("/users/{username}")
     suspend fun getUser(@Path("username") username: String): User?

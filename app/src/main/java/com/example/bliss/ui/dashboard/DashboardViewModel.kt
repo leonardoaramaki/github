@@ -6,21 +6,31 @@ import com.example.bliss.data.GithubRepository
 import com.example.bliss.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
+import kotlin.Exception
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val githubRepository: GithubRepository
 ) : ViewModel() {
-    private val _randomEmoji = MutableLiveData<Emoji>()
+    private val _randomEmoji = MutableLiveData<Result<Emoji?>>()
     private val _user = MutableLiveData<Result<User?>>()
-    val randomEmoji: LiveData<Emoji> = _randomEmoji
+    val randomEmoji: LiveData<Result<Emoji?>> = _randomEmoji
     val user: LiveData<Result<User?>> = _user
 
     fun loadRandomEmoji() {
         viewModelScope.launch {
-            _randomEmoji.postValue(githubRepository.getEmojiList().random())
+            try {
+                val emojis = githubRepository.getEmojiList()
+                if (emojis.isEmpty()) {
+                    _randomEmoji.postValue(Result.success(null))
+                } else {
+                    _randomEmoji.postValue(Result.success(emojis.random()))
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                _randomEmoji.postValue(Result.failure(ex))
+            }
         }
     }
 

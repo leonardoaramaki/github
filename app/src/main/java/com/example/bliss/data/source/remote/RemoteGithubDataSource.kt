@@ -1,6 +1,5 @@
 package com.example.bliss.data.source.remote
 
-import androidx.paging.DataSource
 import androidx.paging.PagingSource
 import com.example.bliss.data.Emoji
 import com.example.bliss.data.User
@@ -12,8 +11,8 @@ class RemoteGithubDataSource @Inject constructor(
     private val github: GithubService
 ) : GithubDataSource {
 
-    override suspend fun getEmojiList(): List<Emoji> {
-        return github.getEmojis()
+    override suspend fun getEmojiList(): Result<List<Emoji>> {
+        return kotlin.runCatching { github.getEmojis().orEmpty() }
     }
 
     override suspend fun saveAll(emojis: List<Emoji>) {

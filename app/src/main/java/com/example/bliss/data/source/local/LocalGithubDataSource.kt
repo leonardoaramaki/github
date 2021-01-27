@@ -1,7 +1,5 @@
 package com.example.bliss.data.source.local
 
-import androidx.paging.DataSource
-import androidx.paging.PagedList
 import androidx.paging.PagingSource
 import com.example.bliss.data.Emoji
 import com.example.bliss.data.User
@@ -13,8 +11,8 @@ import java.lang.RuntimeException
 import javax.inject.Inject
 
 class LocalGithubDataSource @Inject constructor(private val db: AppDatabase) : GithubDataSource {
-    override suspend fun getEmojiList(): List<Emoji> = withContext(Dispatchers.IO) {
-        return@withContext db.emojiDao().getAll()
+    override suspend fun getEmojiList(): Result<List<Emoji>> = withContext(Dispatchers.IO) {
+        return@withContext kotlin.runCatching { db.emojiDao().getAll() }
     }
 
     override suspend fun saveAll(emojis: List<Emoji>) = withContext(Dispatchers.IO) {
