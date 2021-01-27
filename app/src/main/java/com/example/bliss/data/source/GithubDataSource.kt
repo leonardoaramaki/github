@@ -1,12 +1,11 @@
 package com.example.bliss.data.source
 
-import androidx.paging.DataSource
 import androidx.paging.PagingSource
 import com.example.bliss.data.Emoji
 import com.example.bliss.data.User
 
 interface GithubDataSource {
-    suspend fun getEmojiList(): List<Emoji>
+    suspend fun getEmojiList(): Result<List<Emoji>>
 
     suspend fun saveAll(emojis: List<Emoji>)
 

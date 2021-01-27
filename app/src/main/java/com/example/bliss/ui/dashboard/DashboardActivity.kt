@@ -35,11 +35,16 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initRandomEmojiFeature() {
-        viewModel.randomEmoji.observe(this, Observer { emoji ->
-            emoji ?: return@Observer
-            Glide.with(this)
-                .load(emoji.url)
-                .into(binding.ivPreview)
+        viewModel.randomEmoji.observe(this, Observer { result ->
+            result ?: return@Observer
+            if (result.isFailure || result.getOrNull() == null) {
+                Toast.makeText(this, "Error while trying to get emojis", Toast.LENGTH_SHORT).show()
+            } else {
+                val emoji = result.getOrNull()
+                Glide.with(this)
+                    .load(emoji?.url)
+                    .into(binding.ivPreview)
+            }
             binding.progress.hide()
         })
 

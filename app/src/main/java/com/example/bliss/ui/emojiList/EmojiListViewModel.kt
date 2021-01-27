@@ -16,7 +16,11 @@ class EmojiListViewModel @Inject constructor(
 
     fun loadEmojis() {
         viewModelScope.launch {
-            _emojiList.postValue(githubRepository.getEmojiList())
+            try {
+                _emojiList.postValue(githubRepository.getEmojiList())
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
         }
     }
 }

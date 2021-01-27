@@ -69,9 +69,9 @@ class DefaultGithubRepository @Inject constructor(
             return getEmojisFromRemote(currentTime)
         }
 
-        val emojisLocal = localDataSource.getEmojiList()
-        if (emojisLocal.isNotEmpty()) {
-            return emojisLocal
+        val localResult = localDataSource.getEmojiList()
+        if (localResult.isSuccess) {
+            return localResult.getOrNull().orEmpty()
         }
 
         return getEmojisFromRemote(currentTime)
@@ -79,7 +79,7 @@ class DefaultGithubRepository @Inject constructor(
 
     // Fetch emojis from remote, persist on SQLite and save update time.
     private suspend fun getEmojisFromRemote(currentTime: Long): List<Emoji> =
-        remoteDataSource.getEmojiList().also {
+        remoteDataSource.getEmojiList().getOrNull().orEmpty().also {
             preferences.setLastUpdateForEmoji(currentTime)
             localDataSource.saveAll(it)
         }
