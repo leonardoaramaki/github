@@ -2,6 +2,7 @@ package com.example.bliss.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.bliss.R
 import com.example.bliss.data.DefaultGithubRepository
 import com.example.bliss.data.GithubRepository
 import com.example.bliss.data.User
@@ -54,9 +55,9 @@ object DataModule {
             .build()
 
     @Provides
-    fun provideRetrofit(client: OkHttpClient) =
+    fun provideRetrofit(@ApplicationContext context: Context, client: OkHttpClient) =
         Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:3001")
+            .baseUrl(context.getString(R.string.api_server))
             .client(client)
             .addConverterFactory(
                 MoshiConverterFactory.create(Moshi.Builder()
