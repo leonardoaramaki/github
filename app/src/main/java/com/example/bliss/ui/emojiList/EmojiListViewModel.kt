@@ -11,15 +11,16 @@ import javax.inject.Inject
 class EmojiListViewModel @Inject constructor(
     private val githubRepository: GithubRepository
 ) : ViewModel() {
-    private val _emojiList = MutableLiveData<List<Emoji>>()
-    val emojiList: LiveData<List<Emoji>> = _emojiList
+    private val _emojiList = MutableLiveData<Result<List<Emoji>>>()
+    val emojiList: LiveData<Result<List<Emoji>>> = _emojiList
 
     fun loadEmojis() {
         viewModelScope.launch {
             try {
-                _emojiList.postValue(githubRepository.getEmojiList())
+                _emojiList.postValue(Result.success(githubRepository.getEmojiList()))
             } catch (ex: Exception) {
                 ex.printStackTrace()
+                _emojiList.postValue(Result.failure(ex))
             }
         }
     }

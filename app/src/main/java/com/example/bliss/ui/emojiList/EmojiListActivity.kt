@@ -3,9 +3,11 @@ package com.example.bliss.ui.emojiList
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bliss.databinding.ActivityEmojiListBinding
+import com.example.bliss.databinding.LayoutEmptyBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +18,7 @@ class EmojiListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityEmojiListBinding.inflate(layoutInflater)
+        val emptyBinding = LayoutEmptyBinding.bind(binding.root)
         setContentView(binding.root)
         with(binding) {
             adapter = EmojiListAdapter()
@@ -24,10 +27,10 @@ class EmojiListActivity : AppCompatActivity() {
         }
 
         // Load emojis
-        viewModel.emojiList.observe(this, Observer { emojiList ->
-            emojiList ?: return@Observer
+        viewModel.emojiList.observe(this, Observer { result ->
+            emptyBinding.groupEmpty.isVisible = result.getOrNull().isNullOrEmpty() || result.isFailure
             binding.progressEmojiLoading.hide()
-            adapter.setItems(emojiList)
+            adapter.setItems(result.getOrNull().orEmpty())
         })
         viewModel.loadEmojis()
     }

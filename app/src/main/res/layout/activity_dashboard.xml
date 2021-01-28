@@ -10,10 +10,14 @@
         android:id="@+id/iv_preview"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_margin="8dp"
         android:indeterminate="true"
         app:layout_constraintBottom_toTopOf="@id/btn_random_emoji"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:src="@tools:sample/avatars" />
 
     <androidx.core.widget.ContentLoadingProgressBar
@@ -23,27 +27,31 @@
         android:layout_height="48dp"
         android:indeterminate="true"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/btn_random_emoji"
+        app:layout_constraintBottom_toBottomOf="@id/iv_preview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_preview" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_random_emoji"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="@string/random_emoji"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_emoji_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/iv_preview" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_emoji_list"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="@string/emoji_list"
-        app:layout_constraintEnd_toEndOf="@id/btn_random_emoji"
-        app:layout_constraintStart_toStartOf="@id/btn_random_emoji"
+        app:layout_constraintBottom_toTopOf="@id/et_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_random_emoji" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -51,19 +59,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
+        android:textColorHint="#FFCCCCCC"
+        app:layout_constraintBottom_toTopOf="@id/btn_avatar_list"
         app:layout_constraintEnd_toStartOf="@id/btn_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_emoji_list"
         tools:text="blissapps" />
 
     <androidx.core.widget.ContentLoadingProgressBar
-        style="?android:attr/progressBarStyleSmall"
         android:id="@+id/progress_search"
+        style="?android:attr/progressBarStyleSmall"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:visibility="gone"
         android:layout_marginEnd="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/et_username"
         app:layout_constraintEnd_toEndOf="@id/et_username"
         app:layout_constraintTop_toTopOf="@id/et_username"
@@ -72,7 +84,7 @@
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_search"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginEnd="32dp"
         android:src="@drawable/ic_baseline_search_24"
         app:layout_constraintBottom_toBottomOf="@id/et_username"
@@ -82,19 +94,23 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_avatar_list"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="@string/avatar_list"
-        app:layout_constraintEnd_toEndOf="@id/btn_emoji_list"
-        app:layout_constraintStart_toStartOf="@id/btn_emoji_list"
+        app:layout_constraintBottom_toTopOf="@id/btn_google_repos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_username" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_google_repos"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="@string/google_repos"
-        app:layout_constraintEnd_toEndOf="@id/btn_avatar_list"
-        app:layout_constraintStart_toStartOf="@id/btn_avatar_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_avatar_list" />
 </androidx.constraintlayout.widget.ConstraintLayout>

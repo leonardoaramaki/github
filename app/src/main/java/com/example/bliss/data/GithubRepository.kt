@@ -102,10 +102,11 @@ class DefaultGithubRepository @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getGoogleRepos() = Pager(
-        config = PagingConfig(pageSize = 1),
-        initialKey = null,
+        config = PagingConfig(pageSize = 1), // Load a single page each time
+        initialKey = null, // Fetch first page
         remoteMediator = RepositoryRemoteMediator(remoteDataSource, localDataSource)
     ) {
+        // Always get Google repositories.
         localDataSource.getReposByUsername("google")
     }.flow
 }

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     android:paddingBottom="8dp"
     android:paddingTop="8dp"
-    android:background="@color/purple_700"
-    android:textColor="@color/white"
+    android:textColor="@color/purple_700"
     tools:text="dagger" />

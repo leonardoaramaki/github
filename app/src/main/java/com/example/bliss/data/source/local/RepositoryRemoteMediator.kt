@@ -6,6 +6,9 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.example.bliss.data.source.GithubDataSource
 import com.example.bliss.data.source.Repository
+import retrofit2.HttpException
+import java.io.IOException
+import java.lang.RuntimeException
 
 @OptIn(ExperimentalPagingApi::class)
 class RepositoryRemoteMediator(
