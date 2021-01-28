@@ -37,6 +37,11 @@ class EmojiListAdapter : RecyclerView.Adapter<EmojiListAdapter.EmojiViewHolder>(
         notifyDataSetChanged()
     }
 
+    fun clear() {
+        emojis.clear()
+        notifyDataSetChanged()
+    }
+
     class EmojiViewHolder(private val binding: ItemImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(emoji: Emoji) {

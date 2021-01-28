@@ -19,7 +19,7 @@ interface GithubRepository {
     /**
      * Return a list of [Emoji]s.
      */
-    suspend fun getEmojiList(): List<Emoji>
+    suspend fun getEmojiList(refresh: Boolean = false): List<Emoji>
 
     /**
      * Return a [User] data for a given [username].
@@ -61,11 +61,11 @@ class DefaultGithubRepository @Inject constructor(
     private val timeToLive: Long = TimeUnit.DAYS.toMillis(1) // 24h or 86400000ms
 ) : GithubRepository {
 
-    override suspend fun getEmojiList(): List<Emoji> {
+    override suspend fun getEmojiList(refresh: Boolean): List<Emoji> {
         val lastUpdated: Long = preferences.getLastUpdateForEmoji().firstOrNull() ?: 0
 
         val currentTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) * 1000
-        if (currentTime - lastUpdated >= timeToLive) {
+        if (refresh || currentTime - lastUpdated >= timeToLive) {
             return getEmojisFromRemote(currentTime)
         }
 

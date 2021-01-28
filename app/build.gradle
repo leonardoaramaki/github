@@ -87,6 +87,7 @@ dependencies {
     implementation Deps.room
     kapt Deps.roomCompiler
     implementation Deps.roomKtx
+    implementation Deps.swipeRefreshLayout
     implementation Deps.threetenabp
     implementation Deps.timber
     implementation Deps.viewModel

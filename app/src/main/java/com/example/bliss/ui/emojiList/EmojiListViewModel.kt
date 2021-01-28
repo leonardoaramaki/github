@@ -14,7 +14,7 @@ class EmojiListViewModel @Inject constructor(
     private val _emojiList = MutableLiveData<Result<List<Emoji>>>()
     val emojiList: LiveData<Result<List<Emoji>>> = _emojiList
 
-    fun loadEmojis() {
+    fun loadEmojis(refresh: Boolean = false) {
         viewModelScope.launch {
             try {
                 _emojiList.postValue(Result.success(githubRepository.getEmojiList()))
