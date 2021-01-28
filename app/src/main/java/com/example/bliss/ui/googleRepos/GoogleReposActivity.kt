@@ -17,19 +17,27 @@ import kotlinx.coroutines.launch
 class GoogleReposActivity : AppCompatActivity() {
     private val viewModel: GoogleReposViewModel by viewModels()
     private val adapter = GoogleReposAdapter()
+    private lateinit var binding: ActivityGoogleReposBinding
+    private lateinit var emptyBinding: LayoutEmptyBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityGoogleReposBinding.inflate(layoutInflater)
-        val emptyBinding = LayoutEmptyBinding.bind(binding.root)
+        binding = ActivityGoogleReposBinding.inflate(layoutInflater)
+        emptyBinding = LayoutEmptyBinding.bind(binding.root)
+        setContentView(binding.root)
+    }
 
+    override fun onResume() {
+        super.onResume()
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.adapter = adapter.withLoadStateFooter(
+            footer = GoogleReposLoadStateAdapter()
+        )
 
         // Check for errors in any of the LoadStates.
         adapter.addLoadStateListener {
             val errorRefresh = it.refresh is LoadState.Error
-            val errorAppend = it.append is LoadState.Error
             // Display empty state if we have no cache and failed at initial load.
             emptyBinding.groupEmpty.isVisible = adapter.itemCount == 0 && errorRefresh
         }
@@ -39,7 +47,5 @@ class GoogleReposActivity : AppCompatActivity() {
                 adapter.submitData(it)
             }
         }
-
-        setContentView(binding.root)
     }
 }
