@@ -6,6 +6,7 @@ import com.example.bliss.data.GithubRepository
 import com.example.bliss.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.Exception
 
@@ -28,7 +29,7 @@ class DashboardViewModel @Inject constructor(
                     _randomEmoji.postValue(Result.success(emojis.random()))
                 }
             } catch (ex: Exception) {
-                ex.printStackTrace()
+                Timber.e(ex)
                 _randomEmoji.postValue(Result.failure(ex))
             }
         }
@@ -38,9 +39,9 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _user.postValue(Result.success(githubRepository.getUser(username)))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                _user.postValue(Result.failure(e))
+            } catch (ex: Exception) {
+                Timber.e(ex)
+                _user.postValue(Result.failure(ex))
             }
         }
     }

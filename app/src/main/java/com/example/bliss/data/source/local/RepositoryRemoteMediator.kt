@@ -6,9 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.example.bliss.data.source.GithubDataSource
 import com.example.bliss.data.source.Repository
-import retrofit2.HttpException
-import java.io.IOException
-import java.lang.RuntimeException
+import timber.log.Timber
 
 @OptIn(ExperimentalPagingApi::class)
 class RepositoryRemoteMediator(
@@ -41,7 +39,7 @@ class RepositoryRemoteMediator(
                 endOfPaginationReached = repos.isEmpty()
             )
         } catch (ex: Exception) {
-            ex.printStackTrace()
+            Timber.e(ex)
             MediatorResult.Error(ex)
         }
     }
