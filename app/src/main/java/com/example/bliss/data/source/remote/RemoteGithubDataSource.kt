@@ -29,7 +29,7 @@ class RemoteGithubDataSource @Inject constructor(
 
     override suspend fun getUsers(): List<User> {
         // No-op
-        TODO()
+        throw RuntimeException("This method is not supported for remote data sources")
     }
 
     override suspend fun removeUser(user: User) {
@@ -49,6 +49,6 @@ class RemoteGithubDataSource @Inject constructor(
     }
 
     override fun getReposByUsername(username: String): PagingSource<Int, Repository> {
-        TODO("Not yet implemented")
+        throw RuntimeException("This method is not supported for remote data sources")
     }
 }
