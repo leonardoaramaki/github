@@ -46,6 +46,7 @@ object Deps {
     const val room = "androidx.room:room-runtime:2.3.0-alpha04"
     const val roomKtx = "androidx.room:room-ktx:2.3.0-alpha04"
     const val roomCompiler = "androidx.room:room-compiler:2.3.0-alpha04"
+    const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     const val threetenbp = "org.threeten:threetenbp:1.5.0"
     const val threetenabp = "com.jakewharton.threetenabp:threetenabp:1.3.0"
     const val timber = "com.jakewharton.timber:timber:4.7.1"

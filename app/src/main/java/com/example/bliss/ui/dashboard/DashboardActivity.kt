@@ -61,6 +61,7 @@ class DashboardActivity : AppCompatActivity() {
             openAvatarList()
         }
 
+        binding.etUsername.hint = getString(R.string.avavar_search_hint)
         binding.btnSearch.isEnabled = false
         binding.btnSearch.setOnClickListener {
             binding.progressSearch.show()

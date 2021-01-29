@@ -1,7 +1,5 @@
 package com.example.bliss.ui.emojiList
 
-import android.content.res.Resources
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,14 +7,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.example.bliss.R
 import com.example.bliss.data.Emoji
-import com.example.bliss.databinding.ItemImageBinding
+import com.example.bliss.databinding.ItemEmojiBinding
 
 class EmojiListAdapter : RecyclerView.Adapter<EmojiListAdapter.EmojiViewHolder>() {
     private val emojis = mutableListOf<Emoji>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmojiViewHolder =
-        EmojiViewHolder(ItemImageBinding.inflate(LayoutInflater.from(parent.context)))
+        EmojiViewHolder(ItemEmojiBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: EmojiViewHolder, position: Int) {
         holder.bind(emojis[position])
@@ -37,28 +36,26 @@ class EmojiListAdapter : RecyclerView.Adapter<EmojiListAdapter.EmojiViewHolder>(
         notifyDataSetChanged()
     }
 
-    class EmojiViewHolder(private val binding: ItemImageBinding) :
+    fun clear() {
+        emojis.clear()
+        notifyDataSetChanged()
+    }
+
+    class EmojiViewHolder(private val binding: ItemEmojiBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(emoji: Emoji) {
+            val size = binding.root.resources.getDimensionPixelSize(R.dimen.emoji_size)
             with(binding) {
                 val options = RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .format(DecodeFormat.PREFER_RGB_565)
                 Glide.with(itemView.context)
                     .load(emoji.url)
-                    .override(EMOJI_SIZE, EMOJI_SIZE)
-                    .centerInside()
+                    .placeholder(R.drawable.ic_image_placeholder)
+                    .override(size, size)
                     .apply(options)
-                    .into(ivImage)
+                    .into(ivGridEmoji)
             }
-        }
-
-        companion object {
-            val EMOJI_SIZE = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                128f,
-                Resources.getSystem().displayMetrics
-            ).toInt()
         }
     }
 }

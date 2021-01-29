@@ -1,14 +1,13 @@
 package com.example.bliss.ui.avatarList
 
-import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.bliss.data.User
 import com.example.bliss.databinding.ActivityAvatarListBinding
+import com.example.bliss.databinding.LayoutEmptyBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,11 +18,12 @@ class AvatarListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityAvatarListBinding.inflate(layoutInflater)
+        val emptyBinding = LayoutEmptyBinding.bind(binding.root)
         setContentView(binding.root)
 
         with(binding) {
             adapter = AvatarListAdapter()
-            adapter.setOnAvatarRemoveCallback { user: User ->
+            adapter.setOnAvatarRemoveCallback { user ->
                 viewModel.removeUser(user)
             }
             recyclerView.layoutManager = GridLayoutManager(this@AvatarListActivity, COLUMN_COUNT)
@@ -31,6 +31,7 @@ class AvatarListActivity : AppCompatActivity() {
         }
 
         viewModel.users.observe(this, Observer { users ->
+            emptyBinding.groupEmpty.isVisible = users.isNullOrEmpty()
             users ?: return@Observer
             adapter.setItems(users)
         })

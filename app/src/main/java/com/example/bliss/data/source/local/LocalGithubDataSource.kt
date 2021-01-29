@@ -50,6 +50,10 @@ class LocalGithubDataSource @Inject constructor(private val db: AppDatabase) : G
     }
 
     override fun getReposByUsername(username: String): PagingSource<Int, Repository> {
-        return db.repositoryDao().pagingSource(username)
+        return try {
+            db.repositoryDao().pagingSource(username)
+        } catch (ex: Exception) {
+            throw RuntimeException()
+        }
     }
 }
