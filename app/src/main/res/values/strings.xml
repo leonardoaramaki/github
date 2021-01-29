@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Bliss</string>
+    <string name="random_emoji">Random Emoji</string>
+    <string name="emoji_list">Emoji List</string>
+    <string name="avatar_list">Avatar List</string>
+    <string name="not_found_username">Username could not be found!</string>
+    <string name="google_repos">Google Repos</string>
+    <string name="avavar_search_hint">Enter github username…</string>
+    <string name="empty_message">Nothing to see here.\nCheck your Internet connection or try again in a few minutes</string>
 </resources>
